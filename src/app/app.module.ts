@@ -15,9 +15,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SlideshowComponent } from './components/slideshow/slideshow.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { IntroComponent } from './components/intro/intro.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent}
+  { path: '', component: IntroComponent },
+  { path: 'home', component: HomeComponent}
 ];
 
 const myFirebaseConfig = {
@@ -36,13 +38,14 @@ const myFirebaseConfig = {
     SlideshowComponent,
     FooterComponent,
     HomeComponent,
+    IntroComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(myFirebaseConfig),
-    //RouterModule.forRoot(appRoutes)    
+    RouterModule.forRoot(appRoutes)    
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]
