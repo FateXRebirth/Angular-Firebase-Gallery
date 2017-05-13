@@ -1,0 +1,13 @@
+.nav-wrapper {
+    margin-left: 30px;
+}
+
+.image-button {
+    text-align: center;
+    padding-top: 200px;
+}
+
+.card-image img {
+    width: 600px;
+    height: 400px;
+}

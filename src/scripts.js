@@ -1,6 +1,13 @@
 $(document).ready(function () {
+    $('.sticky').pushpin({
+        top: 0,
+        bottom: 1500,
+        offset: 0
+    });
+
     $('.carousel.carousel-slider').carousel({
-        fullWidth: true
+        //fullWidth: true,
+        //duration: 200
     });
 
     $('.carousel').carousel();

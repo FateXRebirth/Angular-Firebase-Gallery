@@ -3759,8 +3759,8 @@ if (jQuery) {
 
     init : function(options) {
       var defaults = {
-        indicators: true,
-        height: 400,
+        indicators: false,
+        height: 500,
         transition: 500,
         interval: 6000
       };
@@ -7609,7 +7609,7 @@ Picker.extend( 'pickadate', DatePicker )
         dist: -100, // zoom scale TODO: make this more intuitive as an option
         shift: 0, // spacing for center image
         padding: 0, // Padding between non center items
-        fullWidth: false, // Change to full width styles
+        fullWidth: true, // Change to full width styles
         indicators: false, // Toggle indicators
         noWrap: false, // Don't wrap around and cycle through items.
         onCycleTo: null // Callback for when a new slide is cycled to.
