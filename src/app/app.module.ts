@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router'
 
 import { FlashMessagesModule } from 'angular2-flash-messages'
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
@@ -45,6 +46,8 @@ const myFirebaseConfig = {
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(myFirebaseConfig),
+    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     RouterModule.forRoot(appRoutes)    
   ],
   providers: [FirebaseService],
