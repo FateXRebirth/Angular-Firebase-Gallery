@@ -1,0 +1,50 @@
+<div class="signup-page">
+    
+  <div class="row">
+      <form class="col s12">
+         
+          <flash-messages></flash-messages>
+        
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">info</i>
+            <input [(ngModel)]="firstName" name="firstName"type="text" class="validate">
+            <label for="icon_prefix">First Name</label>
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix">info_outline</i>
+            <input [(ngModel)]="lastName" name="lastName" type="text" class="validate">
+            <label for="icon_telephone">Last Name</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">email</i>
+            <input [(ngModel)]="email" name="email" type="email" class="validate">
+            <label for="email" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </div>
+
+         <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">vpn_key</i>
+            <input [(ngModel)]="password" name="password" type="password" class="validate">
+            <label for="icon_prefix">Password</label>
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix">check_circle</i>
+            <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate">
+            <label for="icon_telephone">Confirmation</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 center-align">
+             <a (click)="signup()" class="waves-effect waves-light btn">Sign Up</a>
+          </div>
+        </div>
+
+      </form>
+  </div>
+</div>

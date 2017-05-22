@@ -41,6 +41,9 @@
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "typescript": "~2.2.0",
+    "firebase": "~3.9.0",
+    "angular2-flash-messages": "~1.0.8",
+    "angularfire2": "~4.0.0-rc.0"
   }
 }
