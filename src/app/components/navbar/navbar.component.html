@@ -1,6 +1,7 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Gallary</a>
+    <a routerLink="/home" class="brand-logo">Gallary</a>
+
     <ul id="nav-mobile" class="right hide-on-med-and-down"> 
       
       <li>
@@ -24,35 +25,32 @@
              <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
           </ul>
       </li>
+            
+      <!--<li *ngIf="!loggined; then thenBlock else elseBlock"></li> 
+        <ng-template #thenBlock>
+         <a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a>
+         <a routerLink="/login" class="waves-effect waves-light btn">Log In</a>
+        </ng-template>
+        <ng-template #elseBlock>
+          <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>
+        </ng-template>-->
+        
+        <li><a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a></li>
+        <li><a routerLink="/login" class="waves-effect waves-light btn">Log In</a></li>
+        <li><a (click)="logout()" class="waves-effect waves-light btn">Log Out</a></li>
+    
 
-      <li><a class="waves-effect waves-light btn" href="signup" >Sign Up</a></li>
-      <li><a class="waves-effect waves-light btn" href="login" >Log In</a></li>
-
-     
-      <li>
-        <ul id="slide-out" class="side-nav">
-          <li>
-            <div class="userView">
-              <div class="background">
-                <img src="../../../assets/images/funny_lazy_cat-wallpaper-1920x1080.jpg">
-              </div>
-              <a href="#!user"><img class="circle" src="../../../assets/images/funny_lazy_cat-wallpaper-1920x1080.jpg"></a>
-              <a href="#!name"><span class="white-text name">John Doe</span></a>
-              <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div>
-          </li>
-          <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-          <li><a href="#!">Second Link</a></li>
-          <li>
-            <div class="divider"></div>
-          </li>
-          <li><a class="subheader">Subheader</a></li>
-          <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse waves-effect waves-light"><i class="material-icons">menu</i></a>
+         
       
-      
-      </li>
     </ul>
   </div>
 </nav>
+
+<!--
+<nav>
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a href="{{url}}" class="breadcrumb">{{url}}</a>
+      </div>
+    </div>
+</nav>-->

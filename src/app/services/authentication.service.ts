@@ -2,16 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
  
-export class User {
-  constructor(
-    public name: string,
-    public email: string,
-    public password: string,) { }
-}
-
 @Injectable()
 export class AuthenticationService {
-  public username: any;
+  public user: any;
 
   constructor(
     private router: Router,
@@ -19,31 +12,29 @@ export class AuthenticationService {
   ) { }
 
   logout() {
-    alert("Auth logout");
-    
     localStorage.removeItem("user");
-    this.router.navigate(['Login']);
+    //this.router.navigate(['home']);
   }
 
-  login(email, password){
-    alert("Auth login");
+  login(user){
+    localStorage.setItem("user", user);
+    //this.router.navigate(['home']);
     
-    if(this.firebaseService.confirm(email, password) == "None") {
-      return false;
-    } else {
-      this.username = this.firebaseService.confirm(email, password);
-      localStorage.setItem("user", this.username);
-      return true;
-    }
- 
   }
  
   checkCredentials(){
-    alert("Auth check");
-    
     if (localStorage.getItem("user") === null){
-        this.router.navigate(['Login']);
+        this.router.navigate(['login']);
     }
   } 
 
+  check(){
+    if (localStorage.getItem("user") === null){
+      return false;
+    }
+    return true;
+  } 
+
 }
+
+

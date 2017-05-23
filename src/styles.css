@@ -52,3 +52,23 @@
   color: #843534;
 }
 
+.form-title {
+  background-color: #26a69a;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+  height: 50px;
+}
+
+.flash {
+  text-align-last: center;
+  height: 30px;  
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.flash-message { 
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router'
 
@@ -22,7 +22,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
-  { path: '', component: IntroComponent },
+  { path: '', redirectTo: '/index', pathMatch: 'full'},
+  { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'login', component: LoginComponent}
@@ -51,6 +52,7 @@ const myFirebaseConfig = {
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     FlashMessagesModule,
     AngularFireModule.initializeApp(myFirebaseConfig),

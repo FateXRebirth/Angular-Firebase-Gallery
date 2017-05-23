@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  public firstName: string;
-  public lastName: string;
+  public name: string;
+  public phone: string;
   public email: string;
   public password: string;
   public confirmation: string;
+  public users: any;
+  public exist: boolean;
 
   constructor(
     private firebaseService: FirebaseService,
@@ -21,46 +23,48 @@ export class SignupComponent implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit() {
-    this.firstName = '';
-    this.lastName = '';
+  ngOnInit() {    
+    this.name = '';
+    this.phone = '';
     this.email = '';
     this.password = '';
     this.confirmation = '';
+    this.firebaseService.getUser().subscribe(users => {
+      this.users = users;
+    })
   }
 
-  signup() {
-    if(this.firstName == '' || this.lastName == '' || 
-        this.email == '' || this.password == '' || 
-        this.confirmation == '') {
-          this.flashMessage.show('All information require',
-          {cssClass: 'alert-danger', timeout: 3000});
-          return;
+  signup(modal: any) {   
+    if(modal.password != modal.confirmation) {
+      modal.flashMessage.show('Password should be same', 
+      {cssClass: 'flash-message'});
+      modal.password = '';
+      modal.confirmation = '';
+      return;
     }
 
-    if(this.password != this.confirmation) {
-      this.flashMessage.show('Password should be same', 
-      {cssClass: 'alert-danger', timeout: 3000});
-      this.password = '';
-      this.confirmation = '';
+    this.exist = false;
+    this.users.forEach(user => {
+      if(user.email == modal.email) {
+        this.exist = true;      
+      }
+    })
+
+    if(this.exist) {
+      this.flashMessage.show('This E-mail is exist', 
+      {cssClass: 'flash-message'});
       return;
     }
 
     let user = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      password: this.password,
+      name: modal.name,
+      phone: modal.phone,
+      email: modal.email,
+      password: modal.password,
     }
-    
-    if(this.firebaseService.createUser(user)) {
-      
-       
-    } else {
-      this.flashMessage.show('This E-mail is exist', 
-      {cssClass: 'alert-danger', timeout: 3000});
-      return;
-    }    
+
+    this.firebaseService.createUser(user);
+    this.router.navigate(['home']);
     
   }
 

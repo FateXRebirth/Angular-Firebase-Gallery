@@ -1,50 +1,95 @@
 <div class="signup-page">
-    
   <div class="row">
-      <form class="col s12">
-         
+    <form #signupForm="ngForm" class="col s12" (ngSubmit)="signup(signupForm.value)">
+      
+      <div class="row">
+          <div class="col s6 offset-s3 form-title valign-wrapper">
+            Sign Up
+          </div>
+      </div>
+      
+      <div class="flash col s6 offset-s3">
           <flash-messages></flash-messages>
-        
-        <div class="row">
-          <div class="input-field col s6">
-            <i class="material-icons prefix">info</i>
-            <input [(ngModel)]="firstName" name="firstName"type="text" class="validate">
-            <label for="icon_prefix">First Name</label>
-          </div>
-          <div class="input-field col s6">
-            <i class="material-icons prefix">info_outline</i>
-            <input [(ngModel)]="lastName" name="lastName" type="text" class="validate">
-            <label for="icon_telephone">Last Name</label>
-          </div>
+      </div>
+          
+      <div class="row">
+        <div class="col s3 input-field offset-s3">
+          <!-- name -->
+          <i class="material-icons prefix">info</i>
+          <input [(ngModel)]="name" name="name" type="text" class="validate" required 
+          pattern="[a-zA-Z][a-zA-Z ]+" #nameCheck="ngModel">
+            <label for="name">Name</label>
+            <div class="flash col s12">
+             <div [hidden]="nameCheck.valid || nameCheck.pristine">
+                <div class="flash-message" [hidden]="!nameCheck.hasError('required')">name is required</div>
+                <div class="flash-message" [hidden]="!nameCheck.hasError('pattern')">name format should be</div>
+             </div>
+            </div>
+        </div>      
+        <div class="col s3 input-field">
+          <!-- phone -->
+          <i class="material-icons prefix">phone</i>
+          <input [(ngModel)]="phone" name="phone" type="text" class="validate" required 
+          pattern="[0-9]*" minlength="10" maxlength="10"  #phoneCheck="ngModel">
+            <label for="phone">Phone</label>
+            <div class="flash col s12">
+             <div [hidden]="phoneCheck.valid || phoneCheck.pristine">
+                <div class="flash-message" [hidden]="!phoneCheck.hasError('minlength')">Mobile should be 10d igit</div>
+                <div class="flash-message" [hidden]="!phoneCheck.hasError('required')">phone is required</div>
+                <div class="flash-message" [hidden]="!phoneCheck.hasError('pattern')">phone format should be</div>
+             </div>
+            </div>
         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col s3 input-field offset-s3">
+          <!-- email -->
+          <i class="material-icons prefix">email</i>
+          <input [(ngModel)]="email" name="email" type="email" class="validate" required 
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emailCheck="ngModel">
+            <label for="email">Email</label>
+            <div class="flash col s12">
+             <div [hidden]="emailCheck.valid || emailCheck.pristine">
+                <div class="flash-message" [hidden]="!emailCheck.hasError('required')">Email is required</div>
+                <div class="flash-message" [hidden]="!emailCheck.hasError('pattern')">Email format should be <b>example@example.com</b>
+                </div>
+             </div>
+            </div>
+        </div>    
+      </div>
 
-        <div class="row">
-          <div class="input-field col s6">
-            <i class="material-icons prefix">email</i>
-            <input [(ngModel)]="email" name="email" type="email" class="validate">
-            <label for="email" data-error="wrong" data-success="right">Email</label>
-          </div>
+      <div class="row">
+        <div class="col s3 input-field offset-s3">
+          <!-- password -->
+          <i class="material-icons prefix">vpn_key</i>
+          <input [(ngModel)]="password" name="password" type="password" class="validate" required #passwordCheck="ngModel">
+            <label for="password">Password</label>
+            <div class="flash col s12">
+             <div [hidden]="passwordCheck.valid || passwordCheck.pristine">
+                <div class="flash-message" [hidden]="!passwordCheck.hasError('required')">password is required</div>
+             </div>
+            </div>
+        </div>      
+        <div class="col s3 input-field">
+          <!-- confirmation -->
+          <i class="material-icons prefix">check_circle</i>
+          <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate" required #confirmationCheck="ngModel">
+            <label for="confirmation">Confirmation</label>
+            <div class="flash col s12">
+             <div [hidden]="confirmationCheck.valid || confirmationCheck.pristine">
+                <div class="flash-message" [hidden]="!confirmationCheck.hasError('required')">confirmation is required</div>               
+             </div>
+            </div>
         </div>
+      </div>
 
-         <div class="row">
-          <div class="input-field col s6">
-            <i class="material-icons prefix">vpn_key</i>
-            <input [(ngModel)]="password" name="password" type="password" class="validate">
-            <label for="icon_prefix">Password</label>
-          </div>
-          <div class="input-field col s6">
-            <i class="material-icons prefix">check_circle</i>
-            <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate">
-            <label for="icon_telephone">Confirmation</label>
-          </div>
+      <div class="row">
+        <div class="col s12 center-align">
+          <!-- button -->
+          <button type="submit" class="waves-effect waves-light btn" [disabled]="!signupForm.valid">Sign Up</button>
         </div>
-
-        <div class="row">
-          <div class="col s12 center-align">
-             <a (click)="signup()" class="waves-effect waves-light btn">Sign Up</a>
-          </div>
-        </div>
-
-      </form>
+      </div>
+    </form>
   </div>
 </div>
