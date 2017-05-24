@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
+import { Subject } from 'rxjs/Subject';
  
 @Injectable()
 export class AuthenticationService {
@@ -10,6 +11,13 @@ export class AuthenticationService {
     private router: Router,
     private firebaseService: FirebaseService
   ) { }
+
+  private emitChangeSource = new Subject<any>();
+  changeEmitted$ = this.emitChangeSource.asObservable();
+
+  emitChange(change: any) {
+    this.emitChangeSource.next(change);
+  }
 
   logout() {
     localStorage.removeItem("user");

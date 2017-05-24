@@ -37,10 +37,8 @@
         
         <li><a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a></li>
         <li><a routerLink="/login" class="waves-effect waves-light btn">Log In</a></li>
-        <li><a (click)="logout()" class="waves-effect waves-light btn">Log Out</a></li>
-    
-
-         
+        <li *ngIf="loggin"><a (click)="logout()" class="waves-effect waves-light btn">Log Out</a></li>
+                
       
     </ul>
   </div>

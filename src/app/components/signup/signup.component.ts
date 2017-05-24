@@ -35,14 +35,6 @@ export class SignupComponent implements OnInit {
   }
 
   signup(modal: any) {   
-    if(modal.password != modal.confirmation) {
-      modal.flashMessage.show('Password should be same', 
-      {cssClass: 'flash-message'});
-      modal.password = '';
-      modal.confirmation = '';
-      return;
-    }
-
     this.exist = false;
     this.users.forEach(user => {
       if(user.email == modal.email) {
@@ -53,6 +45,14 @@ export class SignupComponent implements OnInit {
     if(this.exist) {
       this.flashMessage.show('This E-mail is exist', 
       {cssClass: 'flash-message'});
+      return;
+    }
+
+    if(modal.password != modal.confirmation) {
+      this.flashMessage.show('Password should be same', 
+      {cssClass: 'flash-message'});
+      this.password = '';
+      this.confirmation = '';
       return;
     }
 

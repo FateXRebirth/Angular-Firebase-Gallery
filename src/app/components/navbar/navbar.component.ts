@@ -1,31 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],    
 })
-export class NavbarComponent implements OnInit {
-  private loggined: boolean;
-  private url: any;
+export class NavbarComponent implements OnInit {  
+
+  loggin: boolean;
 
   constructor(    
     private authenticationService: AuthenticationService,
     private router: Router) {
-      this.loggined = this.authenticationService.check();
-      this.url = this.router.url;
+      this.authenticationService.changeEmitted$.subscribe(
+        value => { 
+          this.loggin = value;
+        })
     }
 
-  ngOnInit() {
-    console.log(this.loggined);
-    console.log(this.url);  
-    
+  ngOnInit() {    
+    console.log("Navbar loading");   
   } 
  
   logout() {
     this.authenticationService.logout();
+    this.authenticationService.emitChange(false);
+    this.router.navigate(['home']); 
   }
-
-  
+    
 }

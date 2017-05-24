@@ -22,9 +22,7 @@
             <div class="flash col s12">
              <div [hidden]="emailCheck.valid || emailCheck.pristine">
                 <div class="flash-message" [hidden]="!emailCheck.hasError('required')">Email is required</div>
-                <div class="flash-message" [hidden]="!emailCheck.hasError('pattern')">Email format should be 
-                  <small><b>joe@abc.com</b></small>
-                </div>
+                <div class="flash-message" [hidden]="!emailCheck.hasError('pattern')">i.e. <b>example@example.com</b></div>
              </div>
             </div>
         </div>
@@ -36,9 +34,7 @@
           <input [(ngModel)]="password" name="password" type="password" class="validate" required #passwordCheck="ngModel">
             <label for="password">Password</label>
              <div class="flash col s12">
-              <div class="flash-message" [hidden]="passwordCheck.valid || passwordCheck.pristine">
-                  Password is required
-              </div>
+              <div class="flash-message" [hidden]="passwordCheck.valid || passwordCheck.pristine">Password is required</div>
              </div>
         </div>
       </div>

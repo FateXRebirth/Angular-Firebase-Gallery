@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   public users: any;
   public confirm: boolean;
   public exist: boolean;
-  public user: any;  
+  public user: any;   
   
   constructor(
     private authenticationService: AuthenticationService,
@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  login(modal: any){
+  login(modal: any){   
+
     this.exist = false;
     this.confirm = false;
     this.users.forEach(user => {
@@ -57,9 +58,11 @@ export class LoginComponent implements OnInit {
       {cssClass: 'flash-message'});
       return;
     }
-    this.authenticationService.login(this.user);
+    this.authenticationService.login(this.user); 
+    this.authenticationService.emitChange(true);
     this.router.navigate(['home']);     
   }
 
+  
 
 }
