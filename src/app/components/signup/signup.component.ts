@@ -27,7 +27,6 @@ export class SignupComponent implements OnInit {
     this.name = '';
     this.phone = '';
     this.email = '';
-    this.password = '';
     this.confirmation = '';
     this.firebaseService.getUser().subscribe(users => {
       this.users = users;
@@ -35,6 +34,8 @@ export class SignupComponent implements OnInit {
   }
 
   signup(modal: any) {   
+   
+
     this.exist = false;
     this.users.forEach(user => {
       if(user.email == modal.email) {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { Subject } from 'rxjs/Subject';
+import * as firebase from 'firebase';
  
 @Injectable()
 export class AuthenticationService {
@@ -26,21 +27,18 @@ export class AuthenticationService {
 
   login(user){
     localStorage.setItem("user", user);
+    firebase.auth().signInWithCustomToken(user.key);
     //this.router.navigate(['home']);
     
   }
  
   checkCredentials(){
     if (localStorage.getItem("user") === null){
-        this.router.navigate(['login']);
+        //this.router.navigate(['login']);
+        return false;
+    } else {
+      return true;
     }
-  } 
-
-  check(){
-    if (localStorage.getItem("user") === null){
-      return false;
-    }
-    return true;
   } 
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy, OnInit } from '@angular/core';
-
+import { AuthenticationService } from './services/authentication.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +7,9 @@ import { Component, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, A
 })
 export class AppComponent implements OnChanges, OnDestroy, OnInit, DoCheck, AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit{  
   title = 'app works!';
-  constructor() {}      
+  constructor(
+    private authenticationService: AuthenticationService,
+  ) {}      
 
   ngOnChanges() {
     //console.log("App change");    
@@ -32,6 +34,7 @@ export class AppComponent implements OnChanges, OnDestroy, OnInit, DoCheck, Afte
     //console.log("App Destroy");    
   }
   ngOnInit() {
+    this.authenticationService.emitChange(this.authenticationService.checkCredentials());
     //console.log("App init");    
   }
 }

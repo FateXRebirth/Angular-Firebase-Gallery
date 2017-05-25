@@ -9,6 +9,9 @@ import { FlashMessagesModule } from 'angular2-flash-messages'
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+import * as admin from 'firebase-admin';
+import * as serviceAccount from './services/gallery-228f2-firebase-adminsdk-rq4vi-461a4d8b4c.json';
 
 import { FirebaseService } from './services/firebase.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -22,7 +25,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/index', pathMatch: 'full'},
+  //{ path: '', redirectTo: '/index', pathMatch: 'full'},
   { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
   { path: 'signup', component: SignupComponent},
@@ -30,12 +33,13 @@ const appRoutes: Routes = [
 ];
 
 const myFirebaseConfig = {
-  apiKey: "AIzaSyD2ypWn-v2PEoyw24y7QUdICEfgOYEX81I",
-  authDomain: "angular2xfirebase.firebaseapp.com",
-  databaseURL: "https://angular2xfirebase.firebaseio.com",
-  projectId: "angular2xfirebase",
-  storageBucket: "angular2xfirebase.appspot.com",
-  messagingSenderId: "1048623893586"
+  apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
+  authDomain: "gallery-228f2.firebaseapp.com",
+  //credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://gallery-228f2.firebaseio.com",
+  projectId: "gallery-228f2",
+  storageBucket: "gallery-228f2.appspot.com",
+  messagingSenderId: "39963305448",
 };
 
 @NgModule({

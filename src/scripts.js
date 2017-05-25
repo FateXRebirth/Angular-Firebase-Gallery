@@ -39,8 +39,7 @@ $(document).ready(function () {
       outDuration: 200, // Transition out duration
       startingTop: '4%', // Starting top style attribute
       endingTop: '10%', // Ending top style attribute
-    }
-  );
+    });
 
     $('.tap-target').tapTarget('open');
     $('.tap-target').tapTarget('close');
@@ -55,5 +54,28 @@ $(document).ready(function () {
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true // Choose whether you can drag to open on touch screens
     });
-  $('select').material_select();
+    
+    $('select').material_select();
+
+    // if (window.performance) {
+    //     console.info("window.performance work's fine on this browser");
+    // }
+    // if (performance.navigation.type == 1) {
+    //     console.info( "This page is reloaded" );
+    // } else {
+    //     console.info( "This page is not reloaded");
+    // }
+    
+    // $(window).on('beforeunload', function(){
+    //     console.log("beforeunload");
+    //     alert("window before load occurred!");
+    // });
+   
+
+    // window.onbeforeunload = function(e) {
+    //     console.log("beforeunload");
+    //     alert("window before load occurred!");
+    // };
+
+       
 });
