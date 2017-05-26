@@ -34,7 +34,7 @@ export class AppComponent implements OnChanges, OnDestroy, OnInit, DoCheck, Afte
     //console.log("App Destroy");    
   }
   ngOnInit() {
-    this.authenticationService.emitChange(this.authenticationService.checkCredentials());
+    //this.authenticationService.emitChange(this.authenticationService.checkCredentials());
     //console.log("App init");    
   }
 }

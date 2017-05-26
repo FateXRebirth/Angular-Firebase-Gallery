@@ -21,20 +21,21 @@ export class SignupComponent implements OnInit {
     private firebaseService: FirebaseService,
     private flashMessage: FlashMessagesService,
     private router: Router,
-  ) {}
-
-  ngOnInit() {    
-    this.name = '';
-    this.phone = '';
-    this.email = '';
-    this.confirmation = '';
+  ) {
     this.firebaseService.getUser().subscribe(users => {
       this.users = users;
     })
   }
 
-  signup(modal: any) {   
-   
+  ngOnInit() {    
+    this.name = '';
+    this.phone = '';
+    this.email = '';
+    this.password = '';
+    this.confirmation = '';    
+  }
+
+  signup(modal: any) {      
 
     this.exist = false;
     this.users.forEach(user => {
@@ -65,8 +66,7 @@ export class SignupComponent implements OnInit {
     }
 
     this.firebaseService.createUser(user);
-    this.router.navigate(['home']);
-    
+    //this.router.navigate(['home']);    
   }
 
 }

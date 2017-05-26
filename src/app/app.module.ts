@@ -25,11 +25,11 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
-  //{ path: '', redirectTo: '/index', pathMatch: 'full'},
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
   { path: 'signup', component: SignupComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
 ];
 
 const myFirebaseConfig = {

@@ -3,8 +3,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { FirebaseService } from './../../services/firebase.service';
-
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -23,21 +22,22 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private flashMessage: FlashMessagesService,
     private router: Router,
-    private firebaseService: FirebaseService) { }
+    private firebaseService: FirebaseService) {
+      this.firebaseService.getUser().subscribe(users => {
+      this.users = users;
+    })
+  }
 
   ngOnInit() {
     this.email = '';
-    this.password = '';
-    this.firebaseService.getUser().subscribe(users => {
-      this.users = users;
-    })
+    this.password = '';    
   }
 
   login(modal: any){   
 
     this.exist = false;
     this.confirm = false;
-    this.users.forEach(user => {
+    this.users.forEach(user => {     
       if(user.email == modal.email) {
         this.exist = true;      
         if(user.password == modal.password) {
@@ -58,8 +58,10 @@ export class LoginComponent implements OnInit {
       {cssClass: 'flash-message'});
       return;
     }
-    this.authenticationService.login(this.user); 
-    this.authenticationService.emitChange(true);
+    //this.authenticationService.login(modal); 
+    //this.authenticationService.emitChange(true);
+    firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password);
+    this.firebaseService.emitChange(true);
     this.router.navigate(['home']);     
   }
 
