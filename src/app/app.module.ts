@@ -35,7 +35,6 @@ const appRoutes: Routes = [
 const myFirebaseConfig = {
   apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
   authDomain: "gallery-228f2.firebaseapp.com",
-  //credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://gallery-228f2.firebaseio.com",
   projectId: "gallery-228f2",
   storageBucket: "gallery-228f2.appspot.com",

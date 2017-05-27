@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FirebaseService } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
   styleUrls: ['./navbar.component.css'],    
 })
 export class NavbarComponent implements OnInit { 
-  loggin: boolean;
+  @Input() loggin: boolean;
 
   constructor(    
     private firebaseService: FirebaseService,
@@ -17,38 +17,13 @@ export class NavbarComponent implements OnInit {
       this.firebaseService.changeEmitted$.subscribe(
         value => { 
           this.loggin = value;
-        })      
+        })              
     }
 
-  ngOnInit() {
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     // User is signed in.
-    //     this.loggined = true;
-    //     console.log("user exist");
-        
-    //     // ...
-    //   } else {
-    //     // User is signed out.
-    //     this.loggined = false;
-    //     console.log("user not exist");
-        
-    //   }
-    // });
-  } 
+  ngOnInit() {} 
  
   logout() {
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      console.log("sign out");      
-    }).catch(function(error) {
-      // An error happened.
-      console.log("sign out error");      
-    });
-
-    this.firebaseService.emitChange(false);
-    //this.authenticationService.logout();
-    //this.authenticationService.emitChange(false);   
+    this.firebaseService.logout();  
     this.router.navigateByUrl(this.router.url);
   }
     

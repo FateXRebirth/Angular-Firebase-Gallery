@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './../../services/authentication.service';
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { FirebaseService } from './../../services/firebase.service';
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +17,6 @@ export class LoginComponent implements OnInit {
   public user: any;   
   
   constructor(
-    private authenticationService: AuthenticationService,
     private flashMessage: FlashMessagesService,
     private router: Router,
     private firebaseService: FirebaseService) {
@@ -58,13 +55,8 @@ export class LoginComponent implements OnInit {
       {cssClass: 'flash-message'});
       return;
     }
-    //this.authenticationService.login(modal); 
-    //this.authenticationService.emitChange(true);
-    firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password);
-    this.firebaseService.emitChange(true);
+    this.firebaseService.login(this.user);
     this.router.navigate(['home']);     
-  }
-
-  
+  }  
 
 }

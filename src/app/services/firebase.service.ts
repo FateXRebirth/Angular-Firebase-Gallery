@@ -3,13 +3,13 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
-
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class FirebaseService {
   users: FirebaseListObservable<User[]>;
   folder: any;
+
 
   constructor(db: AngularFireDatabase) {
     this.folder = "photos";
@@ -39,6 +39,24 @@ export class FirebaseService {
      this.emitChangeSource.next(change);
    }
 
+   login(user) {
+     firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+     this.emitChange(true);
+     localStorage.setItem("user", user);
+   }
+
+   logout() {
+    firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+    console.log("sign out");      
+    }).catch(function(error) {
+    // An error happened.
+    console.log("sign out error");      
+    });
+    this.emitChange(false);
+    localStorage.removeItem("user");
+   }
+
    getUser() {
      return  this.users;     
    }
@@ -49,7 +67,7 @@ export class FirebaseService {
        // Handle Errors here.
        var errorMessage = error.message;
        alert(errorMessage);
-     });   
+     });  
 
      let storageRef = firebase.storage().ref();
      let img = (<HTMLInputElement>document.getElementById('photo')).files[0];
@@ -62,24 +80,6 @@ export class FirebaseService {
      }).catch(function(error) {
        alert(error.message);
      });     
-
-    //   firebase.auth().signInWithEmailAndPassword(user.email, user.password).catch(function(error) {
-    //    alert(error.message);
-    //  });
-
-    //  this.emitChange(true);
-
-    //  let currentUser = firebase.auth().currentUser;     
-
-    //  currentUser.updateProfile({
-    //     displayName: user.name,
-    //     photoURL: user.path,
-    //   }).then(function() {
-    //     // Update successful.
-    //   }, function(error) {
-    //     // An error happened.
-    //     alert(error.message);        
-    //   });
    }
 
    deleteUser(id) {
@@ -88,6 +88,14 @@ export class FirebaseService {
 
    updateUser(id, data) {   
      this.users.update(id, data);
+   }
+
+   checkCredentials(){
+    if (localStorage.getItem("user") === null){
+        return false;
+    } else {
+      return true;
+    }
    }
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService } from './services/authentication.service';
+import { FirebaseService } from './services/firebase.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,8 +7,10 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent implements OnChanges, OnDestroy, OnInit, DoCheck, AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit{  
   title = 'app works!';
+  loggined: boolean;
+  
   constructor(
-    private authenticationService: AuthenticationService,
+    private firebaseServiec: FirebaseService,
   ) {}      
 
   ngOnChanges() {
@@ -34,7 +36,11 @@ export class AppComponent implements OnChanges, OnDestroy, OnInit, DoCheck, Afte
     //console.log("App Destroy");    
   }
   ngOnInit() {
-    //this.authenticationService.emitChange(this.authenticationService.checkCredentials());
     //console.log("App init");    
+    if(this.firebaseServiec.checkCredentials()) {
+      this.loggined = true;
+    } else {
+      this.loggined = false;
+    }
   }
 }

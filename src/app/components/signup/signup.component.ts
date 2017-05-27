@@ -64,9 +64,8 @@ export class SignupComponent implements OnInit {
       email: modal.email,
       password: modal.password,
     }
-
     this.firebaseService.createUser(user);
-    //this.router.navigate(['home']);    
+    this.router.navigate(['home']);    
   }
 
 }
