@@ -3,13 +3,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
-import { Subject } from 'rxjs/Subject';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class FirebaseService {
   users: FirebaseListObservable<User[]>;
   folder: any;
-
 
   constructor(db: AngularFireDatabase) {
     this.folder = "photos";
@@ -24,7 +23,7 @@ export class FirebaseService {
         // var isAnonymous = user.isAnonymous;
         // var uid = user.uid;
         // var providerData = user.providerData;
-        console.log(user.uid);
+        console.log(user);
       } else {
         // console.log("No user");
       }
@@ -32,17 +31,30 @@ export class FirebaseService {
     
    }
 
-   private emitChangeSource = new Subject<any>();
-   changeEmitted$ = this.emitChangeSource.asObservable();
+   public state: Subject<User> = new BehaviorSubject<User>(null);
 
-   emitChange(change: any) {
-     this.emitChangeSource.next(change);
+   ChangeState(state: User) {
+     this.state.next(state);
    }
 
-   login(user) {
+   public image: Subject<string> = new BehaviorSubject<string>(null);
+
+   ChangeImage(image: string) {
+     this.image.next(image);
+   }
+
+   login(user) {     
      firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-     this.emitChange(true);
-     localStorage.setItem("user", user);
+     this.ChangeState(user);
+     let storageRef = firebase.storage().ref();
+        let spaceRef = storageRef.child(user.photo);
+        storageRef.child(user.photo).getDownloadURL().then((url) =>{
+          this.ChangeImage(url);     
+          localStorage.setItem("image", url);          
+        }).catch((error) => {
+          console.log(error); 
+        })      
+     localStorage.setItem("user", JSON.stringify(user));
    }
 
    logout() {
@@ -53,8 +65,10 @@ export class FirebaseService {
     // An error happened.
     console.log("sign out error");      
     });
-    this.emitChange(false);
+    this.ChangeState(null);
+    this.ChangeImage(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("image");
    }
 
    getUser() {
@@ -89,30 +103,13 @@ export class FirebaseService {
    updateUser(id, data) {   
      this.users.update(id, data);
    }
-
-   checkCredentials(){
-    if (localStorage.getItem("user") === null){
-        return false;
-    } else {
-      return true;
-    }
-   }
 }
 
-interface User {
-  $key?: string;
-  uid?: string;
+export interface User {
+  id?: string;
   name?: string;
   phone?: string;
   email?: string;
   password?: string;
   photo?: string
 }
-
-
-// let storageRef = firebase.storage().ref();
-//       let spaceRef = storageRef.child(listing.path);
-//       storageRef.child(listing.path).getDownloadURL().then((url) =>{
-//         this.imageUrl = url;
-//       }).catch((error) => {
-//         console.log(error); 

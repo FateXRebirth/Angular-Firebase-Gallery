@@ -1,9 +1,7 @@
 <nav>
   <div class="nav-wrapper">
     <a routerLink="/index" class="brand-logo">Gallary</a>
-
-    <ul id="nav-mobile" class="right hide-on-med-and-down"> 
-      
+    <ul id="nav-mobile" class="right hide-on-med-and-down">       
       <li>
           <div class="search-bar">
               <input type="search" id="search" placeholder="Search..." /><i class="material-icons">search</i>
@@ -13,9 +11,8 @@
         <a><i class="material-icons prefix">search</i></a>
       </li>
 
-      <li>
+      <!--<li>
           <a class='dropdown-button btn' data-beloworigin="true" href='#' data-activates='dropdown1'>Catagory</a>
-          <!-- Dropdown Structure -->
           <ul id='dropdown1' class='dropdown-content'>
               <li><a href="#!">one</a></li>
               <li><a href="#!">two</a></li>
@@ -24,7 +21,7 @@
               <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
              <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
           </ul>
-      </li>
+      </li>-->
             
       <!--<li *ngIf="!loggined; then thenBlock else elseBlock"></li> 
         <ng-template #thenBlock>
@@ -35,41 +32,45 @@
           <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>
         </ng-template>-->
         
-        <li *ngIf="!loggin"><a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a></li>
+        <!--<li *ngIf="!loggin"><a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a></li>
         <li *ngIf="!loggin"><a routerLink="/login" class="waves-effect waves-light btn">Log In</a></li>
         <li *ngIf="loggin">
-          <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>
-          
-        </li>
+          <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>          
+        </li>-->
+
+        <!--<div *ngIf="condition as value; else elseBlock">{{value}}</div>
+        <ng-template #elseBlock>...</ng-template>-->
+
         <ul id="slide-out" class="side-nav">
-          <li *ngIf="!loggin; then thenBlock else elseBlock"></li> 
-            <ng-template #thenBlock>
-            <a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a>
-            <a routerLink="/login" class="waves-effect waves-light btn">Log In</a>
-            </ng-template>
-            <ng-template #elseBlock>
-              <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>
-            </ng-template>
-            
-            <li><div class="userView">
+          <li>
+            <div class="userView">
               <div class="background">
-                <img src="images/office.jpg">
+                <img src="../../../assets/images/high_tech-wallpaper-1920x1080.jpg">
               </div>
-              <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-              <a href="#!name"><span class="white-text name">John Doe</span></a>
-              <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div></li>
-            <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-            <li><a href="#!">Second Link</a></li>
-            <li><div class="divider"></div></li>
-            <li><a class="subheader">Subheader</a></li>
-            <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-            <a (click)="logout()" class="waves-effect waves-light btn">Log Out</a>
-          </ul>
+              <img *ngIf="imageUrl" class="circle" src="{{imageUrl}}">
+              <a *ngIf="user" href="#!name"><span class="white-text name">{{user.name}}</span></a>
+              <a *ngIf="user" href="#!email"><span class="white-text email">{{user.email}}</span></a>
+            </div>
+          </li>
+          <li>
+          <li *ngIf="user; then thenBlock else elseBlock"></li>
+            <ng-template #thenBlock>
+              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <li><div class="divider"></div></li>
+              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <li><a (click)="logout()" class="waves-effect waves-light btn">Upload Photo</a></li>
+              <li><a (click)="logout()" class="waves-effect waves-light btn">Delete Account</a></li>
+              <li><a (click)="logout()" class="waves-effect waves-light btn">Log Out</a></li>
+            </ng-template>  
+            <ng-template #elseBlock>
+              <li><a routerLink="/signup" class="waves-effect waves-light btn">Sign Up</a></li>
+              <li><a routerLink="/login" class="waves-effect waves-light btn">Log In</a></li>
+            </ng-template>
+         </ul>
           <a href="#!" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-                
-      
-    </ul>
+     </ul>
   </div>
 </nav>
 
