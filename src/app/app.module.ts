@@ -28,8 +28,6 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
-  { path: 'signup', component: SignupComponent},
-  { path: 'login', component: LoginComponent},
 ];
 
 const myFirebaseConfig = {
