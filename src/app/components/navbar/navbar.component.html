@@ -42,9 +42,10 @@
         <ng-template #elseBlock>...</ng-template>-->
 
         <ul id="slide-out" class="side-nav">
+          <li><a id="sideNav-button" class="sideNav-close"><i class="material-icons sideNav-icon">close</i></a></li>
           <li>
-            <div class="userView">
-              <div class="background">
+            <div class="userView">               
+              <div class="background">               
                 <img src="../../../assets/images/high_tech-wallpaper-1920x1080.jpg">
               </div>
               <img *ngIf="imageUrl" class="circle" src="{{imageUrl}}">
@@ -85,7 +86,7 @@
     <form #loginForm="ngForm" class="col s12" (ngSubmit)="login(loginForm.value)">
       
       <div class="row">
-          <div class="col s6 offset-s3 form-title valign-wrapper">
+          <div class="col s12 form-title valign-wrapper">
             Log In
           </div>
       </div>
@@ -98,13 +99,13 @@
         <div class="col s6 input-field offset-s3">
           <!-- email -->
           <i class="material-icons prefix">email</i>
-          <input [(ngModel)]="email" name="email" type="email" class="validate" required 
-          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #emailCheck="ngModel">
-            <label for="email">Email</label>
+          <input [(ngModel)]="loginEmail" name="loginEmail" type="email" class="validate" required 
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #loginEmailCheck="ngModel">
+            <label for="loginEmail">Email</label>
             <div class="flash col s12">
-             <div [hidden]="emailCheck.valid || emailCheck.pristine">
-                <div class="flash-message" [hidden]="!emailCheck.hasError('required')">Email is required</div>
-                <div class="flash-message" [hidden]="!emailCheck.hasError('pattern')">i.e. <b>example@example.com</b></div>
+             <div [hidden]="loginEmailCheck.valid || loginEmailCheck.pristine">
+                <div class="flash-message" [hidden]="!loginEmailCheck.hasError('required')">Email is required</div>
+                <div class="flash-message" [hidden]="!loginEmailCheck.hasError('pattern')">i.e. <b>example@example.com</b></div>
              </div>
             </div>
         </div>
@@ -113,10 +114,10 @@
         <div class="col s6 input-field offset-s3">
           <!-- passowrd -->
           <i class="material-icons prefix">vpn_key</i>
-          <input [(ngModel)]="password" name="password" type="password" class="validate" required #passwordCheck="ngModel">
-            <label for="password">Password</label>
+          <input [(ngModel)]="loginPassword" name="loginPassword" type="password" class="validate" required #loginPasswordCheck="ngModel">
+            <label for="login_password">Password</label>
              <div class="flash col s12">
-              <div class="flash-message" [hidden]="passwordCheck.valid || passwordCheck.pristine">Password is required</div>
+              <div class="flash-message" [hidden]="loginPasswordCheck.valid || loginPasswordCheck.pristine">Password is required</div>
              </div>
         </div>
       </div>
@@ -136,7 +137,7 @@
     <form #signupForm="ngForm" class="col s12" > <!-- (ngSubmit)="signup(signupForm.value) -->
       
       <div class="row">
-          <div class="col s6 offset-s3 form-title valign-wrapper">
+          <div class="col s12 form-title valign-wrapper">
             Sign Up
           </div>
       </div>
@@ -146,7 +147,7 @@
       </div>-->
           
       <div class="row">
-        <div class="col s3 input-field offset-s3">
+        <div class="col s6 input-field ">
           <!-- name -->
           <i class="material-icons prefix">info</i>
           <input [(ngModel)]="name" name="name" type="text" class="validate" required 
@@ -159,7 +160,7 @@
              </div>
             </div>
         </div>      
-        <div class="col s3 input-field">
+        <div class="col s6 input-field">
           <!-- phone -->
           <i class="material-icons prefix">phone</i>
           <input [(ngModel)]="phone" name="phone" type="text" class="validate" required 
@@ -176,7 +177,7 @@
       </div>
       
       <div class="row">
-        <div class="col s3 input-field offset-s3">
+        <div class="col s12 input-field">
           <!-- email -->
           <i class="material-icons prefix">email</i>
           <input [(ngModel)]="email" name="email" type="email" class="validate" required 
@@ -192,7 +193,7 @@
       </div>
 
       <div class="row">
-        <div class="col s3 input-field offset-s3">
+        <div class="col s6 input-field">
           <!-- password -->
           <i class="material-icons prefix">vpn_key</i>
           <input [(ngModel)]="password" name="password" type="password" class="validate" required #passwordCheck="ngModel">
@@ -203,7 +204,7 @@
              </div>
             </div>
         </div>      
-        <div class="col s3 input-field">
+        <div class="col s6 input-field">
           <!-- confirmation -->
           <i class="material-icons prefix">check_circle</i>
           <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate" required #confirmationCheck="ngModel">
@@ -216,7 +217,7 @@
         </div>
       </div>
 
-      <div class="col s6  offset-s3 file-field input-field">
+      <div class="col s12 file-field input-field">
           <div>
             <i class="material-icons prefix">photo</i>
             <input name="photo" id="photo" type="file">
@@ -232,19 +233,72 @@
       <div class="row">
         <div class="col s12 center-align">
           <!-- button -->
-          <button (click)="signup(signupForm.value)" type="button" class="waves-effect waves-light btn" [disabled]="!signupForm.valid">Sign Up</button>
+          <button (click)="signup(signupForm.value)" type="button" class="modal-close waves-effect waves-light btn" [disabled]="!signupForm.valid">Sign Up</button>
         </div>
       </div>
     </form>
   </div>
 </div>
               
-
-<!--
-<nav>
-    <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="{{url}}" class="breadcrumb">{{url}}</a>
+<!-- Modal Structure -->
+<div id="upload-modal" class="modal">
+  <div class="row">
+    <form #uploadForm="ngForm" class="col s12" (ngSubmit)="upload(uploadForm.value)">
+      
+      <div class="row">
+          <div class="col s12 form-title valign-wrapper">
+            Upload Image
+          </div>
       </div>
-    </div>
-</nav>-->
+      
+      <!--<div class="flash col s6 offset-s3">
+          <flash-messages></flash-messages>
+      </div>-->
+          
+      <div class="row">
+        <div class="col s12 input-field">
+          <!-- email -->
+          <i class="material-icons prefix">title</i>
+          <input [(ngModel)]="title" name="title" type="text" class="validate" required 
+          pattern="[a-zA-Z][a-zA-Z ]+" #titleCheck="ngModel">
+            <label for="title">Title</label>
+            <div class="flash col s12">
+             <div [hidden]="titleCheck.valid || titleCheck.pristine">
+                <div class="flash-message" [hidden]="!titleCheck.hasError('required')">Title is required</div>
+                <div class="flash-message" [hidden]="!titleCheck.hasError('pattern')">i.e. Mountain</div>
+             </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 input-field">
+          <!-- email -->
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea [(ngModel)]="description" name="description" class="materialize-textarea"></textarea>
+          <label for="description">Description (Optional)</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 file-field input-field">
+          <div>
+            <i class="material-icons prefix">photo</i>
+            <input id="image" type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input 
+            class="file-path validate center-align" type="text" placeholder="Upload your image">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 center-align">
+          <!-- button -->
+          <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!uploadForm.valid"><i class="material-icons prefix" style="padding-right: 5px;">publish</i>Upload</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

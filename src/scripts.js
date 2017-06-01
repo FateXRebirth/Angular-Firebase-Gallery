@@ -57,6 +57,10 @@ $(document).ready(function () {
     
     $('select').material_select();
 
+    $('#sideNav-button').on('click', function() {
+        $('.button-collapse').sideNav('hide');
+    })
+
     // if (window.performance) {
     //     console.info("window.performance work's fine on this browser");
     // }

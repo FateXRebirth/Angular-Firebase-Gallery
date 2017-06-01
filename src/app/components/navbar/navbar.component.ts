@@ -10,15 +10,27 @@ import { FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css'],    
 })
 export class NavbarComponent implements OnInit {
+  // nav
   public user: any;
   public imageUrl: any;
-
-  public email: string;
-  public password: string;
+  // login
+  public loginEmail: string;
+  public loginPassword: string;
   public users: any;
   public confirm: boolean;
+  public login_exist: boolean;
+  public login_user: any; 
+  // signup
+  public name: string;
+  public phone: string;
+  public email: string;
+  public password: string;
+  public confirmation: string;
   public exist: boolean;
-  public _user: any; 
+  // upload
+  public title: string;
+  public description: string;
+  public image: string;
 
   constructor(    
     private flashMessage: FlashMessagesService,
@@ -30,9 +42,20 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    // login
+    this.loginEmail = '';
+    this.loginPassword = ''; 
+    // singup
+    this.name = '';
+    this.phone = '';
     this.email = '';
-    this.password = '';  
-
+    this.password = '';
+    this.confirmation = ''; 
+    // upload
+    this.title = '';
+    this.description = '';
+    this.image = '';   
+    // nav
     this.firebaseService.state.subscribe(state => {
       if(state) {
         this.user = state;
@@ -60,25 +83,25 @@ export class NavbarComponent implements OnInit {
  
   logout() {
     this.firebaseService.logout();  
+    this.flashMessage.show('Success!',
+    {cssClass: 'flash-success'});
   }
 
   login(modal: any){   
 
-    this.exist = false;
+    this.login_exist = false;
     this.confirm = false;
     this.users.forEach(user => {     
-      if(user.email == modal.email) {
-        this.exist = true;      
-        if(user.password == modal.password) {
+      if(user.email == modal.loginEmail) {
+        this.login_exist = true;      
+        if(user.password == modal.loginPassword) {
           this.confirm = true;
-          this._user = user;
+          this.login_user = user;
         }
       }
     })
 
-    if(!this.exist) {
-      console.log('not exist');
-      
+    if(!this.login_exist) {
       this.flashMessage.show('This E-mail does not exist',
       {cssClass: 'flash-message'});
       return;
@@ -89,9 +112,70 @@ export class NavbarComponent implements OnInit {
       {cssClass: 'flash-message'});
       return;
     }
-    this.firebaseService.login(this._user);
+
+    this.flashMessage.show('Success! You are loggined',
+    {cssClass: 'flash-success'});
+
+    this.firebaseService.login(this.login_user);
     this.router.navigate(['home']);     
   }  
+
+  signup(modal: any) {      
+
+    this.exist = false;
+    this.users.forEach(user => {
+      if(user.email == modal.email) {
+        this.exist = true;      
+      }
+    })
+
+    if(this.exist) {
+      this.flashMessage.show('This E-mail is exist', 
+      {cssClass: 'flash-message'});
+      return;
+    }
+
+    if(modal.password != modal.confirmation) {
+      this.flashMessage.show('Password should be same', 
+      {cssClass: 'flash-message'});
+      this.password = '';
+      this.confirmation = '';
+      return;
+    }
+
+    let user = {
+      name: modal.name,
+      phone: modal.phone,
+      email: modal.email,
+      password: modal.password,
+    }
+    this.flashMessage.show('Success! You can login now',
+    {cssClass: 'flash-success'});
+
+    this.firebaseService.createUser(user);
+    this.router.navigate(['home']);    
+  }
+
+  upload(modal: any) {
+    console.log("title => " + modal.title);
+    console.log("description => " + modal.description);
+    let img = (<HTMLInputElement>document.getElementById('image')).files[0];
+    if(img) {
+      console.log("image => " + img);
+      Object.keys(img).forEach(function (key) {
+        console.log(img[key]);
+      });            
+    }else{
+      console.log("No image");
+    }
+
+    let imageInfo = {
+      title: modal.title,
+      description: modal.description,
+      img: img
+    }
+    
+  }
 
 }
 

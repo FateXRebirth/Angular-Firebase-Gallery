@@ -8,10 +8,12 @@ import { Subject, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class FirebaseService {
   users: FirebaseListObservable<User[]>;
-  folder: any;
+  photoFolder: any;
+  imageFolder: any;
 
   constructor(db: AngularFireDatabase) {
-    this.folder = "photos";
+    this.photoFolder = "photos";
+    this.imageFolder = "images";
     this.users = db.list('/users');
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -41,6 +43,19 @@ export class FirebaseService {
 
    ChangeImage(image: string) {
      this.image.next(image);
+   }
+
+   upload(img) {
+     let storageRef = firebase.storage().ref();     
+    //  let path = `/${this.imageFolder}/${img.name}`;
+    //  let iRef = storageRef.child(path);
+    //  iRef.put(img).then((snapshot)=> {
+    //    user.photo = path;
+    //    let key = this.users.push(user).key;
+    //    this.updateUser(key, { id: key});
+    //  }).catch(function(error) {
+    //    alert(error.message);
+    //  });     
    }
 
    login(user) {     
@@ -85,7 +100,7 @@ export class FirebaseService {
 
      let storageRef = firebase.storage().ref();
      let img = (<HTMLInputElement>document.getElementById('photo')).files[0];
-     let path = `/${this.folder}/${img.name}`;
+     let path = `/${this.photoFolder}/${img.name}`;
      let iRef = storageRef.child(path);
      iRef.put(img).then((snapshot)=> {
        user.photo = path;
@@ -94,6 +109,25 @@ export class FirebaseService {
      }).catch(function(error) {
        alert(error.message);
      });     
+
+     firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(() => {
+       let currentUser = firebase.auth().currentUser;
+        currentUser.updateProfile({
+          displayName: user.name,
+          photoURL: user.photo,
+        }).then(function() {
+          // Update successful.
+          console.log("Success");          
+        }, function(error) {
+          // An error happened.
+          console.log("Update user'profile wrong");          
+        });
+     }).catch(function(error) {
+       alert(error.message);
+     })
+
+     firebase.auth().signOut();
+     
    }
 
    deleteUser(id) {
