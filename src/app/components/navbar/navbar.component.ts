@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private firebaseService: FirebaseService,
     private router: Router) {
-       this.firebaseService.getUser().subscribe(users => {
+      this.firebaseService.getUser().subscribe(users => {
       this.users = users;
     })
   }
@@ -64,9 +64,9 @@ export class NavbarComponent implements OnInit {
       }
     })
 
-    this.firebaseService.image.subscribe(image => {
-      if(image) {
-        this.imageUrl = image;
+    this.firebaseService.photo.subscribe(photo => {
+      if(photo) {
+        this.imageUrl = photo;
       } else {
         this.imageUrl = null;
       }
@@ -117,6 +117,7 @@ export class NavbarComponent implements OnInit {
     {cssClass: 'flash-success'});
 
     this.firebaseService.login(this.login_user);
+    this.refresh();
     this.router.navigate(['home']);     
   }  
 
@@ -153,29 +154,47 @@ export class NavbarComponent implements OnInit {
     {cssClass: 'flash-success'});
 
     this.firebaseService.createUser(user);
+    this.refresh();
     this.router.navigate(['home']);    
   }
 
   upload(modal: any) {
-    console.log("title => " + modal.title);
-    console.log("description => " + modal.description);
     let img = (<HTMLInputElement>document.getElementById('image')).files[0];
-    if(img) {
-      console.log("image => " + img);
-      Object.keys(img).forEach(function (key) {
-        console.log(img[key]);
-      });            
-    }else{
-      console.log("No image");
+    if(!img) {
+      this.flashMessage.show('You have to provide Image', 
+      {cssClass: 'flash-message'});
+      return;
     }
 
     let imageInfo = {
+      provider: this.user.name,
       title: modal.title,
       description: modal.description,
-      img: img
+      img: img,
+      time: new Date().toLocaleString()
     }
-    
+    this.flashMessage.show('Success! You upload a image',
+    {cssClass: 'flash-success'});
+
+    this.firebaseService.upload(imageInfo);
+    this.refresh();
+    this.router.navigate(['home']);    
   }
 
+  refresh() {
+    // login
+    this.loginEmail = '';
+    this.loginPassword = ''; 
+    // singup
+    this.name = '';
+    this.phone = '';
+    this.email = '';
+    this.password = '';
+    this.confirmation = ''; 
+    // upload
+    this.title = '';
+    this.description = '';
+    this.image = '';  
+  }
 }
 

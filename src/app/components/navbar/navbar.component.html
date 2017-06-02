@@ -125,6 +125,7 @@
         <div class="col s12 center-align">
           <!-- button -->
           <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!loginForm.valid">Log in</button>
+          <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
         </div>
       </div>
     </form>
@@ -134,7 +135,7 @@
 <!-- Modal Structure -->
 <div id="signup-modal" class="modal">
     <div class="row">
-    <form #signupForm="ngForm" class="col s12" > <!-- (ngSubmit)="signup(signupForm.value) -->
+    <form #signupForm="ngForm" class="col s12" (ngSubmit)="signup(signupForm.value)">
       
       <div class="row">
           <div class="col s12 form-title valign-wrapper">
@@ -234,6 +235,7 @@
         <div class="col s12 center-align">
           <!-- button -->
           <button (click)="signup(signupForm.value)" type="button" class="modal-close waves-effect waves-light btn" [disabled]="!signupForm.valid">Sign Up</button>
+          <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
         </div>
       </div>
     </form>
@@ -296,7 +298,8 @@
       <div class="row">
         <div class="col s12 center-align">
           <!-- button -->
-          <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!uploadForm.valid"><i class="material-icons prefix" style="padding-right: 5px;">publish</i>Upload</button>
+          <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!uploadForm.valid">Upload</button>
+          <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
         </div>
       </div>
     </form>

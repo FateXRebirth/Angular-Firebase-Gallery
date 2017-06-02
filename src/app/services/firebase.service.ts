@@ -8,6 +8,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class FirebaseService {
   users: FirebaseListObservable<User[]>;
+  images: FirebaseListObservable<Image[]>;
   photoFolder: any;
   imageFolder: any;
 
@@ -15,6 +16,7 @@ export class FirebaseService {
     this.photoFolder = "photos";
     this.imageFolder = "images";
     this.users = db.list('/users');
+    this.images = db.list('/images');
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
@@ -39,36 +41,40 @@ export class FirebaseService {
      this.state.next(state);
    }
 
-   public image: Subject<string> = new BehaviorSubject<string>(null);
+   public photo: Subject<string> = new BehaviorSubject<string>(null);
 
-   ChangeImage(image: string) {
-     this.image.next(image);
-   }
+   ChangeImage(photo: string) {
+     this.photo.next(photo);
+   }  
 
-   upload(img) {
+   upload(imageInfo) {
      let storageRef = firebase.storage().ref();     
-    //  let path = `/${this.imageFolder}/${img.name}`;
-    //  let iRef = storageRef.child(path);
-    //  iRef.put(img).then((snapshot)=> {
-    //    user.photo = path;
-    //    let key = this.users.push(user).key;
-    //    this.updateUser(key, { id: key});
-    //  }).catch(function(error) {
-    //    alert(error.message);
-    //  });     
+     let path = `/${this.imageFolder}/${imageInfo.img.name}`;
+     let iRef = storageRef.child(path);
+     iRef.put(imageInfo.img).then((snapshot)=> {
+       storageRef.child(path).getDownloadURL().then(url => {
+         imageInfo.img = url;
+         this.images.push(imageInfo);
+       }).catch(error => {
+         alert(error.message);
+       })
+       
+     }).catch(function(error) {
+       alert(error.message);
+     });     
    }
 
    login(user) {     
      firebase.auth().signInWithEmailAndPassword(user.email, user.password);
      this.ChangeState(user);
      let storageRef = firebase.storage().ref();
-        let spaceRef = storageRef.child(user.photo);
-        storageRef.child(user.photo).getDownloadURL().then((url) =>{
-          this.ChangeImage(url);     
-          localStorage.setItem("image", url);          
-        }).catch((error) => {
-          console.log(error); 
-        })      
+     let spaceRef = storageRef.child(user.photo);
+     storageRef.child(user.photo).getDownloadURL().then((url) =>{
+       this.ChangeImage(url);     
+       localStorage.setItem("image", url);          
+     }).catch((error) => {
+        console.log(error); 
+     })      
      localStorage.setItem("user", JSON.stringify(user));
    }
 
@@ -88,6 +94,10 @@ export class FirebaseService {
 
    getUser() {
      return  this.users;     
+   }
+
+   getImages() {
+     return this.images;
    }
 
    createUser(user) {
@@ -146,4 +156,12 @@ export interface User {
   email?: string;
   password?: string;
   photo?: string
+}
+
+export interface Image {
+  provider?: string;
+  title?: string;
+  description?: string;
+  img?: string;
+  time?: string;
 }
