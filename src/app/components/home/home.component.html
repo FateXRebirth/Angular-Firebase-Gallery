@@ -1,5 +1,6 @@
-<div class="row">
-    <div *ngFor="let image of images" class="col m4">
+<div class="center-align">
+  <div class="row">
+    <div *ngFor="let image of pagedItems" class="col m4">
          <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" src="{{image.img}}" align="middle">
@@ -23,4 +24,25 @@
           </div>
         </div>
     </div>
+  </div>
+
+  <!-- pager -->
+  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      
+      <li class="waves-effect" [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(1)"><i class="material-icons">chevron_left</i></a>
+      </li>
+      <li class="waves-effect" [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li class="waves-effect" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li class="waves-effect" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li class="waves-effect" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.totalPages)"><i class="material-icons">chevron_right</i></a>
+      </li>
+  </ul>
 </div>

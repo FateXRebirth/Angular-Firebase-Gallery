@@ -53,6 +53,7 @@
     "firebase": "~3.9.0",
     "angular2-flash-messages": "~1.0.8",
     "angularfire2": "~4.0.0-rc.0",
-    "firebase-admin": "5.0.0"
+    "firebase-admin": "5.0.0",
+    "underscore": "*"
   }
 }

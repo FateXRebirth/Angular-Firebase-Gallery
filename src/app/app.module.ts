@@ -15,6 +15,8 @@ import * as serviceAccount from './services/gallery-228f2-firebase-adminsdk-rq4v
 
 import { FirebaseService } from './services/firebase.service';
 import { AuthenticationService } from './services/authentication.service';
+import { PagerService } from './services/pager.service';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SlideshowComponent } from './components/slideshow/slideshow.component';
@@ -61,7 +63,7 @@ const myFirebaseConfig = {
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     RouterModule.forRoot(appRoutes)    
   ],
-  providers: [FirebaseService, AuthenticationService],
+  providers: [FirebaseService, AuthenticationService, PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
