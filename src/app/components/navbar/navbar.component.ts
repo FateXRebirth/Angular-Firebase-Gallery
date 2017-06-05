@@ -31,6 +31,9 @@ export class NavbarComponent implements OnInit {
   public title: string;
   public description: string;
   public image: string;
+  // change
+  public change_password: string;
+  public change_confirmation: string;
 
   constructor(    
     private flashMessage: FlashMessagesService,
@@ -54,7 +57,10 @@ export class NavbarComponent implements OnInit {
     // upload
     this.title = '';
     this.description = '';
-    this.image = '';   
+    this.image = '';  
+    // change 
+    this.change_confirmation = '';
+    this.change_password = '';
     // nav
     this.firebaseService.state.subscribe(state => {
       if(state) {
@@ -158,6 +164,31 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['home']);    
   }
 
+  delete() {
+    this.firebaseService.deleteUser(this.user.id);
+    this.firebaseService.logout();
+    this.flashMessage.show('Success!',
+    {cssClass: 'flash-success'});
+  }
+
+  update(modal: any) {
+    if(modal.change_password != modal.change_confirmation) {
+      this.flashMessage.show('Password should be same', 
+      {cssClass: 'flash-message'});
+      this.change_password = '';
+      this.change_confirmation = '';
+      return;
+    }
+
+    let data = {
+      password: modal.change_password
+    }
+    this.firebaseService.updatePassword(this.user.id, data);
+    this.firebaseService.logout();
+    this.flashMessage.show('Success!',
+    {cssClass: 'flash-success'});
+  }
+
   upload(modal: any) {
     let img = (<HTMLInputElement>document.getElementById('image')).files[0];
     if(!img) {
@@ -195,6 +226,9 @@ export class NavbarComponent implements OnInit {
     this.title = '';
     this.description = '';
     this.image = '';  
+    // change
+    this.change_confirmation = '';
+    this.change_password = ''
   }
 }
 

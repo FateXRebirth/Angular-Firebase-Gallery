@@ -42,3 +42,8 @@
 .userView {
     height: 200px;
 }
+
+.message {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

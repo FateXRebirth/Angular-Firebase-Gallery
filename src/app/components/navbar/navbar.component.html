@@ -60,13 +60,10 @@
             
           <li *ngIf="user; then thenBlock else elseBlock"></li>
             <ng-template #thenBlock>
-              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-              <li><div class="divider"></div></li>
-              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <!--<li><div class="divider"></div></li>-->
               <li><a href="#upload-modal" class="waves-effect waves-light btn">Upload Photo</a></li>                
-              <li><a (click)="logout()" class="waves-effect waves-light btn">Delete Account</a></li>
+              <li><a href="#update-modal" class="waves-effect waves-light btn">Change Password</a></li>
+              <li><a href="#delete-modal" class="waves-effect waves-light btn">Delete Account</a></li>
               <li><a (click)="logout()" class="waves-effect waves-light btn">Log Out</a></li>
             </ng-template>  
             <ng-template #elseBlock>
@@ -197,22 +194,24 @@
         <div class="col s6 input-field">
           <!-- password -->
           <i class="material-icons prefix">vpn_key</i>
-          <input [(ngModel)]="password" name="password" type="password" class="validate" required #passwordCheck="ngModel">
+          <input [(ngModel)]="password" name="password" type="password" class="validate" required minlength=6 #passwordCheck="ngModel">
             <label for="password">Password</label>
             <div class="flash col s12">
              <div [hidden]="passwordCheck.valid || passwordCheck.pristine">
                 <div class="flash-message" [hidden]="!passwordCheck.hasError('required')">Password is required</div>
+                <div class="flash-message" [hidden]="!passwordCheck.hasError('minlength')">Password should contain 6 characters</div>
              </div>
             </div>
         </div>      
         <div class="col s6 input-field">
           <!-- confirmation -->
           <i class="material-icons prefix">check_circle</i>
-          <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate" required #confirmationCheck="ngModel">
+          <input [(ngModel)]="confirmation" name="confirmation" type="password" class="validate" required minlength=6 #confirmationCheck="ngModel">
             <label for="confirmation">Confirmation</label>
             <div class="flash col s12">
              <div [hidden]="confirmationCheck.valid || confirmationCheck.pristine">
-                <div class="flash-message" [hidden]="!confirmationCheck.hasError('required')">Confirmation is required</div>               
+                <div class="flash-message" [hidden]="!confirmationCheck.hasError('required')">Confirmation is required</div>
+                <div class="flash-message" [hidden]="!confirmationCheck.hasError('minlength')">Confirmation should contain 6 characters</div>               
              </div>
             </div>
         </div>
@@ -299,6 +298,88 @@
         <div class="col s12 center-align">
           <!-- button -->
           <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!uploadForm.valid">Upload</button>
+          <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="update-modal" class="modal">
+  <div class="row">
+    <form #updateForm="ngForm" class="col s12" (ngSubmit)="update(updateForm.value)">
+      
+      <div class="row">
+          <div class="col s12 form-title valign-wrapper">
+            Change Password
+          </div>
+      </div>
+      
+      <!--<div class="flash col s6 offset-s3">
+          <flash-messages></flash-messages>
+      </div>-->
+          
+      <div class="row">
+        <div class="col s6 input-field">
+          <!-- password -->
+          <i class="material-icons prefix">vpn_key</i>
+          <input [(ngModel)]="change_password" name="change_password" type="password" class="validate" required minlength=6 #changePasswordCheck="ngModel">
+            <label for="password">Password</label>
+            <div class="flash col s12">
+             <div [hidden]="changePasswordCheck.valid || changePasswordCheck.pristine">
+                <div class="flash-message" [hidden]="!changePasswordCheck.hasError('required')">Password is required</div>
+                <div class="flash-message" [hidden]="!changePasswordCheck.hasError('minlength')">Password should contain 6 characters</div>               
+             </div>
+            </div>
+        </div>      
+        <div class="col s6 input-field">
+          <!-- confirmation -->
+          <i class="material-icons prefix">check_circle</i>
+          <input [(ngModel)]="change_confirmation" name="change_confirmation" type="password" class="validate" required minlength=6 #changeConfirmationCheck="ngModel">
+            <label for="confirmation">Confirmation</label>
+            <div class="flash col s12">
+             <div [hidden]="changeConfirmationCheck.valid || changeConfirmationCheck.pristine">
+                <div class="flash-message" [hidden]="!changeConfirmationCheck.hasError('required')">Confirmation is required</div>    
+                <div class="flash-message" [hidden]="!changeConfirmationCheck.hasError('minlength')">Confirmation should contain 6 characters</div>                         
+             </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 center-align">
+          <!-- button -->
+          <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!updateForm.valid">Comfirm</button>
+          <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="delete-modal" class="modal">
+  <div class="row">
+    <form #deleteForm="ngForm" class="col s12" (ngSubmit)="delete()">
+      
+      <div class="row">
+          <div class="col s12 form-title valign-wrapper">
+            Delete Account
+          </div>
+      </div>
+      
+      <!--<div class="flash col s6 offset-s3">
+          <flash-messages></flash-messages>
+      </div>-->
+          
+      <div class="row">
+        <div class="col s12 center-align">
+          <!-- button -->
+          <div class="message">
+            <h3> Do you really want to delete this account? </h3>
+          </div>
+          <button type="submit" class="modal-close waves-effect waves-light btn" [disabled]="!deleteForm.valid">Confirm</button>
           <button (click)="refresh()" type="button" class="modal-close waves-effect waves-light btn">Cancel</button>
         </div>
       </div>

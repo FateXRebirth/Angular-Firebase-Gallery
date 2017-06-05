@@ -120,31 +120,43 @@ export class FirebaseService {
        alert(error.message);
      });     
 
-     firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(() => {
-       let currentUser = firebase.auth().currentUser;
-        currentUser.updateProfile({
-          displayName: user.name,
-          photoURL: user.photo,
-        }).then(function() {
-          // Update successful.
-          console.log("Success");          
-        }, function(error) {
-          // An error happened.
-          console.log("Update user'profile wrong");          
-        });
-     }).catch(function(error) {
-       alert(error.message);
-     })
+    //  firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(() => {
+    //    let currentUser = firebase.auth().currentUser;
+    //     currentUser.updateProfile({
+    //       displayName: user.name,
+    //       photoURL: user.photo,
+    //     }).then(function() {
+    //       // Update successful.
+    //       console.log("Success");          
+    //     }, function(error) {
+    //       // An error happened.
+    //       console.log("Update user'profile wrong");          
+    //     });
+    //  }).catch(function(error) {
+    //    alert(error.message);
+    //  })
 
-     firebase.auth().signOut();
+    //  firebase.auth().signOut();
      
    }
 
    deleteUser(id) {
-     this.users.remove(id);
+     let currentUser = firebase.auth().currentUser;
+     currentUser.delete().catch((error) => {
+       console.log(error.message);
+     });
+     this.users.remove(id);     
    }
 
-   updateUser(id, data) {   
+   updateUser(id, data) { 
+     this.users.update(id, data);
+   }
+   
+   updatePassword(id, data) {
+     let currentUser = firebase.auth().currentUser;
+     currentUser.updatePassword(data.password).catch((error) => {
+       console.log(error.message);       
+     });  
      this.users.update(id, data);
    }
 }
