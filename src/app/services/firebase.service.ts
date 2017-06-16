@@ -170,10 +170,12 @@ export class FirebaseService {
      this.query.next(query);
    }
 
-   getImagesByQuery(query){     
+   getImagesByQuery(query){    
+     query = query + "+"; 
+     var re = new RegExp(query);    
      this.images.subscribe(snapshots => {
        snapshots.forEach(element => {
-         if(element.title == query){
+         if(re.test(element.title) || re.test(element.description)){
            this.queryImages.push(element);
          }
        })       
