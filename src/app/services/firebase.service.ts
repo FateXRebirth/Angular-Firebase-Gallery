@@ -9,6 +9,9 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class FirebaseService {
   users: FirebaseListObservable<User[]>;
   images: FirebaseListObservable<Image[]>;
+
+  queryImages: Image[] = [];
+
   photoFolder: any;
   imageFolder: any;
 
@@ -27,7 +30,7 @@ export class FirebaseService {
         // var isAnonymous = user.isAnonymous;
         // var uid = user.uid;
         // var providerData = user.providerData;
-        console.log(user);
+        //console.log(user);
       } else {
         // console.log("No user");
       }
@@ -160,8 +163,23 @@ export class FirebaseService {
      this.users.update(id, data);
    }
 
-   getImageByQuery(query) {
-      return this.images;
+
+   public query: Subject<any> = new BehaviorSubject<any>(null);
+
+   ChangeQuery(query: any) {
+     this.query.next(query);
+   }
+
+   getImagesByQuery(query){     
+     this.images.subscribe(snapshots => {
+       snapshots.forEach(element => {
+         if(element.title == query){
+           this.queryImages.push(element);
+         }
+       })       
+       this.ChangeQuery(this.queryImages);
+       this.queryImages = [];
+     })
    }
 }
 

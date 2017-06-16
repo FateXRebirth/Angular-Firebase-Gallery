@@ -235,8 +235,10 @@ export class NavbarComponent implements OnInit {
 
   search() {
     if(this.query) {
-      this.router.navigate(['home'],{ queryParams: { search: this.query }});
+      this.router.navigate(['search'],{ queryParams: { q: this.query }});
       this.query = '';
+    } else {
+      this.router.navigate(['home']);
     }    
   }
 }

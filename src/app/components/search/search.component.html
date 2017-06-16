@@ -1,6 +1,7 @@
 <!-- SlideShow -->
 <app-slideshow></app-slideshow>    
-<div class="row">
+  <div *ngIf="success; else elseBlock">
+    <div class="row">  
 <div *ngFor="let image of pagedItems" class="col m4">
       <div class="card">
       <div class="card-image waves-effect waves-block waves-light">
@@ -48,4 +49,11 @@
     </li>
 </ul>
 </div> 
+  </div>
+    <ng-template #elseBlock>
+      <div class="noResult">
+        <h3>NO RESULTS MATCHING {{query}}</h3>
+      </div>
+    </ng-template>
+
 

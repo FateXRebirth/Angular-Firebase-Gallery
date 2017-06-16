@@ -24,11 +24,13 @@ import { HomeComponent } from './components/home/home.component';
 import { IntroComponent } from './components/intro/intro.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
+import { SearchComponent } from './components/search/search.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
+  { path: 'search', component: SearchComponent},
+  { path: '', component: IntroComponent},
 ];
 
 const myFirebaseConfig = {
@@ -50,6 +52,7 @@ const myFirebaseConfig = {
     IntroComponent,
     SignupComponent,
     LoginComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
