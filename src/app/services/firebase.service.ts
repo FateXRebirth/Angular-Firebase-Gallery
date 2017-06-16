@@ -93,7 +93,7 @@ export class FirebaseService {
    }
 
    getUser() {
-     return  this.users;     
+     return this.users;     
    }
 
    getImages() {
@@ -158,6 +158,10 @@ export class FirebaseService {
        console.log(error.message);       
      });  
      this.users.update(id, data);
+   }
+
+   getImageByQuery(query) {
+      return this.images;
    }
 }
 

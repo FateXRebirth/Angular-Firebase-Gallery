@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { FirebaseService, User } from './../../services/firebase.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
@@ -10,6 +10,7 @@ import { FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css'],    
 })
 export class NavbarComponent implements OnInit {
+  public query: any;
   // nav
   public user: any;
   public imageUrl: any;
@@ -45,6 +46,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query = '';
     // login
     this.loginEmail = '';
     this.loginPassword = ''; 
@@ -123,7 +125,7 @@ export class NavbarComponent implements OnInit {
     {cssClass: 'flash-success'});
 
     this.firebaseService.login(this.login_user);
-    this.refresh();
+    //this.refresh();
     this.router.navigate(['home']);     
   }  
 
@@ -160,7 +162,7 @@ export class NavbarComponent implements OnInit {
     {cssClass: 'flash-success'});
 
     this.firebaseService.createUser(user);
-    this.refresh();
+    //this.refresh();
     this.router.navigate(['home']);    
   }
 
@@ -229,6 +231,13 @@ export class NavbarComponent implements OnInit {
     // change
     this.change_confirmation = '';
     this.change_password = ''
+  }
+
+  search() {
+    if(this.query) {
+      this.router.navigate(['home'],{ queryParams: { search: this.query }});
+      this.query = '';
+    }    
   }
 }
 

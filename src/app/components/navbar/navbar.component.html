@@ -1,14 +1,14 @@
 <nav>
   <div class="nav-wrapper">
-    <a routerLink="/index" class="brand-logo">Gallary</a>
+    <a routerLink="/index" class="brand-logo">Gallery</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">       
       <li>
           <div class="search-bar">
-              <input type="search" id="search" placeholder="Search..." /><i class="material-icons">search</i>
+              <input [(ngModel)]="query" type="text" id="search" />
           </div>
       </li>
       <li>
-        <a><i class="material-icons prefix">search</i></a>
+         <a (click)="search()"><i class="material-icons prefix">search</i></a>
       </li>
 
       <!--<li>
@@ -75,7 +75,6 @@
      </ul>
   </div>
 </nav>
-
 
 <!-- Modal Structure -->
 <div id="login-modal" class="modal">

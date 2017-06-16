@@ -11,7 +11,6 @@ import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable 
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import * as admin from 'firebase-admin';
-import * as serviceAccount from './services/gallery-228f2-firebase-adminsdk-rq4vi-461a4d8b4c.json';
 
 import { FirebaseService } from './services/firebase.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -27,7 +26,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'index', component: IntroComponent },
   { path: 'home', component: HomeComponent},
 ];
@@ -61,7 +60,7 @@ const myFirebaseConfig = {
     AngularFireModule.initializeApp(myFirebaseConfig),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    RouterModule.forRoot(appRoutes)    
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [FirebaseService, AuthenticationService, PagerService],
   bootstrap: [AppComponent]
