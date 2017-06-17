@@ -25,6 +25,7 @@ import { IntroComponent } from './components/intro/intro.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { SearchComponent } from './components/search/search.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 const appRoutes: Routes = [
   { path: 'index', component: IntroComponent },
@@ -53,6 +54,7 @@ const myFirebaseConfig = {
     SignupComponent,
     LoginComponent,
     SearchComponent,
+    BreadcrumbsComponent,
   ],
   imports: [
     BrowserModule,

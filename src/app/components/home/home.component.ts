@@ -3,11 +3,13 @@ import { FirebaseService } from './../../services/firebase.service';
 import { PagerService } from './../../services/pager.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
+
 export class HomeComponent implements OnInit {
   public images: any;
   // pager object
